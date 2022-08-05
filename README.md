@@ -5,7 +5,9 @@
 ## Документы
 * [Задание](https://github.com/Gabr12el/QA_DIPLOM/blob/master/docs/Zadanie.md)
 * [План автоматизации](https://github.com/Gabr12el/QA_DIPLOM/blob/master/docs/Plan.md)
-                      
+* [Отчет по итогам тестирования](https://github.com/Gabr12el/QA_DIPLOM/blob/master/docs/Report.md)
+* [Отчет по итогам автоматизированного тестирования](https://github.com/Gabr12el/QA_DIPLOM/blob/master/docs/Summary.md)
+
 Дипломный проект представляет собой автоматизацию тестирования комплексного сервиса, взаимодействующего с СУБД и API Банка.
 
 На локальном компьютере заранее должны быть установлены IntelliJ IDEA и Docker
@@ -16,7 +18,7 @@
 
 **2.** Открыть Docker;
 
-**3.** В терминале развернуть контейнер с помощью команды
+**3.** В терминале развернуть контейнер с помощью команды:
 
     docker-compose up -d;
 
@@ -28,13 +30,15 @@
 
 **5.** Открыть браузер и пройти по [ссылке](http://localhost:8080/);
 
-**6.** В новом терминале запустить тесты
+**6.** В новом терминале запустить тесты:
 
-    для mySQL - ./gradlew test -Durl=jdbc:mysql://localhost:3306/app -Duser=app -Dpassword=pass ;
+    для mySQL:
+    ./gradlew test -Durl=jdbc:mysql://localhost:3306/app -Duser=app -Dpassword=pass ;
 
-    для postgresgl - ./gradlew test -Durl=jdbc:postgresql://localhost:5432/app -Duser=app -Dpassword=pass ;
+    для postgresgl: 
+    ./gradlew test -Durl=jdbc:postgresql://localhost:5432/app -Duser=app -Dpassword=pass ;
 
-**7.** В новом терминале сформировать отчет командой
+**7.** В новом терминале сформировать отчет командой:
 
     ./gradlew allureServe .
 
