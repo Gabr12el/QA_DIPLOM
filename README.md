@@ -3,9 +3,9 @@
 Дипломный проект представляет собой автоматизацию тестирования комплексного сервиса, взаимодействующего с СУБД и API Банка.
 
 ## Документы
-* [Задание](https://github.com/Gabr12el/Diplom/blob/master/docs/Zadanie.md)
-* [План автоматизации](https://github.com/Gabr12el/Diplom/blob/master/docs/Plan.md)
- 
+* [Задание](https://github.com/Gabr12el/QA_DIPLOM/blob/master/docs/Zadanie.md)
+* [План автоматизации](https://github.com/Gabr12el/QA_DIPLOM/blob/master/docs/Plan.md)
+                      
 Дипломный проект представляет собой автоматизацию тестирования комплексного сервиса, взаимодействующего с СУБД и API Банка.
 
 На локальном компьютере заранее должны быть установлены IntelliJ IDEA и Docker
