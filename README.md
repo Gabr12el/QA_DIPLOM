@@ -24,9 +24,11 @@
 
 **4.** В новом терминале запустить целевое приложение:
 
-     для mySQL - java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar 
+     для mySQL: 
+    java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar 
 
-     для postgresgl - java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
+     для postgresgl:
+     java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 
 **5.** Открыть браузер и пройти по [ссылке](http://localhost:8080/);
 
