@@ -132,7 +132,7 @@ public class PayDebitCard {
     }
 
     @Test
-    @DisplayName("Покупка картой: в поле месяц предыдущий от текущего, остальные поля -валидные данные")
+    @DisplayName("Покупка картой: в поле месяц предыдущий от текущего, остальные поля - валидные данные")
     public void shouldFieldWithPreviousMonthFormDebit() {
         paymentPage.payDebitCard();
         var info = getPreviousMonthInField();
@@ -256,8 +256,7 @@ public class PayDebitCard {
     }
 
     @Test
-    @DisplayName("Покупка картой: поле CVV двумя числами" +
-            " остальные поля - валидные данные")
+    @DisplayName("Покупка картой: поле CVV двумя числами" + " остальные поля - валидные данные")
     public void shouldTwoNumberInFieldCVVАFormDebit() {
         paymentPage.payDebitCard();
         var info = getOTwoNumberInFieldCVV();

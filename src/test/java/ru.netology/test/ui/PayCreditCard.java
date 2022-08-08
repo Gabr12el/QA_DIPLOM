@@ -151,7 +151,7 @@ public class PayCreditCard {
 
     @Test
     @DisplayName("Покупка в кредит: в поле месяц тринадцатый (не существующий) месяц" +
-            " остальные поля -валидные данные")
+            " остальные поля - валидные данные")
     public void shouldFieldWithThirteenMonthWithCredit() {
         paymentPage.buyCreditCard();
         var info = getThirteenMonthInField();

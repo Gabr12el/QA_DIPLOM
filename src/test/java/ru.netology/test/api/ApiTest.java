@@ -24,8 +24,7 @@ public class ApiTest {
 
     @DisplayName("Запрос на покупку по карте со статусом APPROVED")
     @Test
-    void shouldApprovePayment() {
-        ApiHelper.payDebitCard((approvedCardInfo));
+    void shouldApprovePayment() { ApiHelper.payDebitCard((approvedCardInfo));
     }
 
     @DisplayName("Запрос на кредит по карте со статусом APPROVED")
