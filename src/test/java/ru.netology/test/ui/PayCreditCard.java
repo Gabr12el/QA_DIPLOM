@@ -197,7 +197,6 @@ public class PayCreditCard {
         paymentPage.sendingValidDataWithFieldNameError();
     }
 
-
     @Test
     @DisplayName("Покупка в кредит: поле владелец спец.символами" +
             " остальные поля - валидные данные")

@@ -42,7 +42,7 @@ public class PayDebitCard {
 
     @Test
     @SneakyThrows
-    @DisplayName("Покупка валидной картой")
+    @DisplayName("Покупка валидной картой") //на 45тыс отоварились, но образовалось 4500000
     public void shouldPayDebitValidCard() {
         paymentPage.payDebitCard();
         var info = getApprovedCard();
@@ -55,6 +55,7 @@ public class PayDebitCard {
         assertEquals(expected, getPaymentInfo().getStatus());
         assertEquals(paymentInfo.getTransaction_id(), orderInfo.getPayment_id());
         assertEquals(expectedAmount, paymentInfo.getAmount());
+        //SELECT * FROM payment_entity ORDER BY created DESC
     }
 
     @Test
