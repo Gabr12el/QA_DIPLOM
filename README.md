@@ -14,15 +14,15 @@
 
 ## Процедура запуска авто-тестов:
 
-**1.** Склонировать на локальный репозиторий [Дипломный проект](https://github.com/netology-code/qa-diploma) и открыть его в приложении IntelliJ IDEA.
+**1.** Склонировать на локальный репозиторий [Дипломный проект](https://github.com/netology-code/qa-diploma) и открыть его в приложении IntelliJ IDEA
 
-**2.** Запустить Docker Desktop;
+**2.** Запустить Docker Desktop
 
-**3.** Открыть проект в IntelliJ IDEA;
+**3.** Открыть проект в IntelliJ IDEA
 
 **4.** В терминале запустить контейнеры:
 
-    docker-compose up -d;
+    docker-compose up -d
 
 **5.** Запустить целевое приложение:
 
@@ -32,7 +32,7 @@
      для postgresgl:
      java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 
-**5.** Открыть второй терминал;
+**5.** Открыть второй терминал
 
 **6.** Во втором терминале запустить тесты:
 
@@ -44,7 +44,7 @@
 
 **7.** Создать отчёт Allure и открыть в браузере:
 
-    ./gradlew allureServe .
+    ./gradlew allureServe
 
 **8.** Для завершения работы allureServe выполнить команду:
 
