@@ -16,13 +16,15 @@
 
 **1.** Склонировать на локальный репозиторий [Дипломный проект](https://github.com/netology-code/qa-diploma) и открыть его в приложении IntelliJ IDEA.
 
-**2.** Открыть Docker;
+**2.** Запустить Docker Desktop;
 
-**3.** В терминале развернуть контейнер с помощью команды:
+**3.** Открыть проект в IntelliJ IDEA;
+
+**4.** В терминале запустить контейнеры:
 
     docker-compose up -d;
 
-**4.** В новом терминале запустить целевое приложение:
+**5.** Запустить целевое приложение:
 
      для mySQL: 
     java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar 
@@ -30,17 +32,17 @@
      для postgresgl:
      java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 
-**5.** Открыть браузер и пройти по [ссылке](http://localhost:8080/);
+**5.** Открыть второй терминал;
 
-**6.** В новом терминале запустить тесты:
+**6.** Во втором терминале запустить тесты:
 
     для mySQL:
-    ./gradlew test -Durl=jdbc:mysql://localhost:3306/app -Duser=app -Dpassword=pass ;
+    ./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"
 
     для postgresgl: 
-    ./gradlew test -Durl=jdbc:postgresql://localhost:5432/app -Duser=app -Dpassword=pass ;
+    ./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"
 
-**7.** В новом терминале сформировать отчет командой:
+**7.** Создать отчёт Allure и открыть в браузере:
 
     ./gradlew allureServe .
 

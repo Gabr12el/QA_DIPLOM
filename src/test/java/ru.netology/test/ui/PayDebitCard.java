@@ -56,6 +56,7 @@ public class PayDebitCard {
         assertEquals(paymentInfo.getTransaction_id(), orderInfo.getPayment_id());
         assertEquals(expectedAmount, paymentInfo.getAmount());
         //SELECT * FROM payment_entity ORDER BY created DESC
+        //Перезапустить отдельно
     }
 
     @Test
