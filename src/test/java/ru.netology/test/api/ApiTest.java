@@ -7,12 +7,16 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.netology.data.ApiHelper;
 import ru.netology.data.DataHelper;
+import ru.netology.data.DataHelper.*;
+
+import static ru.netology.data.ApiHelper.payByCard;
 
 public class ApiTest {
-    DataHelper.CardInfo approvedCardInfo = DataHelper.getApprovedCard();
-    DataHelper.CardInfo declinedCardInfo = DataHelper.getDeclinedCard();
+    CardInfo approvedCardInfo = DataHelper.getApprovedCard();
+    CardInfo declinedCardInfo = DataHelper.getDeclinedCard();
+    String debitPath = "/payment";
+    String creditPath = "/credit";
 
     @BeforeAll
     static void setUp() {
@@ -22,26 +26,33 @@ public class ApiTest {
                 new AllureRestAssured());
     }
 
+    @DisplayName("Проверка отправки данных банковскому сервису")
+    @Test
+    void shouldSendRequestToBankService() {
+
+    }
+
     @DisplayName("Запрос на покупку по карте со статусом APPROVED")
     @Test
-    void shouldApprovePayment() { ApiHelper.payDebitCard((approvedCardInfo));
+    void shouldApprovePayment() {
+        payByCard(approvedCardInfo, debitPath);
     }
 
     @DisplayName("Запрос на кредит по карте со статусом APPROVED")
     @Test
     void shouldApproveCredit() {
-        ApiHelper.payCreditCard(approvedCardInfo);
+        payByCard(approvedCardInfo, creditPath);
     }
 
     @DisplayName("Запрос на покупку по карте со статусом DECLINED")
     @Test
     void shouldDeclinePayment() {
-        ApiHelper.createPaymentError(declinedCardInfo);
+        payByCard(declinedCardInfo, debitPath);
     }
 
     @DisplayName("Запрос на кредит по карте со статусом DECLINED")
     @Test
     void shouldDeclineCredit() {
-        ApiHelper.createCreditError(declinedCardInfo);
+        payByCard(declinedCardInfo, creditPath);
     }
 }
