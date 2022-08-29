@@ -10,6 +10,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class SQLHelper {
@@ -19,7 +20,13 @@ public class SQLHelper {
     @SneakyThrows
     public static void start() {
         runner = new QueryRunner();
-        connection = DriverManager.getConnection(System.getProperty("db.url"), "app", "pass");
+        try {
+            /*String dbUrl = System.getProperty("db.url");
+            System.out.println("URL: " + dbUrl);*/
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @SneakyThrows

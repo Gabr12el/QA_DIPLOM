@@ -2,14 +2,15 @@ package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
+
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import ru.netology.data.DataHelper.CardInfo;
 
+import ru.netology.data.DataHelper.CardInfo;
 
 public abstract class AbstractPaymentPage {
 
@@ -41,26 +42,27 @@ public abstract class AbstractPaymentPage {
         buttonContinue.click();
     }
 
-    public void sendingValidDataWithFieldCardNumberError () {
+    public String sendingValidDataWithFieldCardNumberError() {
         fieldCardNumberError.shouldBe(visible);
-        System.out.println("ОШИБКА" + fieldCardNumberError.getText());//***
-        //System.out.println(fieldCardNumberError.getText());
-        //return fieldCardNumberError.
+        return fieldCardNumberError.getText();
     }
 
-    public void sendingValidDataWithFakerCardNumber () {
+    public String sendingValidDataWithFakerCardNumber() {
         notificationError.shouldBe(visible, Duration.ofSeconds(15));
+        return notificationError.getText();
     }
 
-    public void sendingValidDataWithFieldMonthError () {
+    public String sendingValidDataWithFieldMonthError() {
         fieldMonthError.shouldBe(visible);
+        return fieldMonthError.getText();
     }
 
-    public void sendingValidDataWithFieldYearError () {
+    public String sendingValidDataWithFieldYearError() {
         fieldYearError.shouldBe(visible);
+        return fieldYearError.getText();
     }
 
-    public void sendingEmptyNameValidData (DataHelper.CardInfo info) {
+    public void sendingEmptyNameValidData(DataHelper.CardInfo info) {
         cardNumberField.setValue(info.getNumber());
         monthField.setValue(info.getMonth());
         yearField.setValue(info.getYear());
@@ -69,12 +71,14 @@ public abstract class AbstractPaymentPage {
         fieldOwnerError.shouldBe(visible);
     }
 
-    public void sendingValidDataWithFieldNameError () {
+    public String sendingValidDataWithFieldNameError() {
         fieldOwnerError.shouldBe(visible);
+        return fieldOwnerError.getText();
     }
 
-    public void sendingValidDataWithFieldCVVError () {
+    public String sendingValidDataWithFieldCVVError() {
         fieldCvcError.shouldBe(visible);
+        return fieldCvcError.getText();
     }
 
     public void sendEmptyForm() {
@@ -87,8 +91,12 @@ public abstract class AbstractPaymentPage {
     }
 
     public void bankApproved() {
-        notificationApproved.shouldBe(visible, Duration.ofSeconds(15)); }
+        notificationApproved.shouldBe(visible, Duration.ofSeconds(15));
+        //System.out.println(notificationApproved.getText());
+    }
 
     public void bankDeclined() {
-        notificationError.shouldBe(visible, Duration.ofSeconds(15)); }
+        notificationError.shouldBe(visible, Duration.ofSeconds(15));
+        //System.out.println(notificationError.getText());
+    }
 }

@@ -8,9 +8,12 @@ import ru.netology.data.DataHelper;
 import ru.netology.data.SQLHelper;
 import ru.netology.page.CreditPaymentPage;
 
+import java.sql.SQLException;
+
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DataHelper.*;
+import static ru.netology.data.Notification.*;
 import static ru.netology.data.SQLHelper.*;
 
 public class TestPayCreditCard {
@@ -18,7 +21,6 @@ public class TestPayCreditCard {
 
     @BeforeAll
     public static void setUpAll() {
-
         SelenideLogger.addListener("allure", new AllureSelenide()); }
 
     @BeforeEach
@@ -34,7 +36,6 @@ public class TestPayCreditCard {
 
     @AfterAll
     public static void tearDownAll() {
-
         SelenideLogger.removeListener("allure");
     }
 
@@ -45,7 +46,7 @@ public class TestPayCreditCard {
         var info = getApprovedCard();
         creditPaymentPage.sendingCardData(info);
         creditPaymentPage.bankApproved();
-        var expected = DataHelper.getStatusFirstCard();
+        var expected = DataHelper.getStatusApprovedCard();
         var creditRequest = getCreditRequestInfo();
         var orderInfo = getOrderInfo();
         assertEquals(expected, getCreditRequestInfo().getStatus());
@@ -59,7 +60,7 @@ public class TestPayCreditCard {
         var info = DataHelper.getDeclinedCard();
         creditPaymentPage.sendingCardData(info);
         creditPaymentPage.bankDeclined();
-        var expected = getStatusSecondCard();
+        var expected = getStatusDeclinedCard();
         var paymentInfo = getPaymentInfo().getStatus();
         assertEquals(expected, paymentInfo);
     }
@@ -67,16 +68,16 @@ public class TestPayCreditCard {
     @Test
     @DisplayName("Покупка в кредит: все поля пустые")
     void shouldEmptyFormWithCredit() {
-        creditPaymentPage.pressButtonForContinue();
         creditPaymentPage.sendEmptyForm();
     }
 
     @Test
     @DisplayName("Покупка в кредит: поле карты пусто, остальные поля - валидные данные")
-    public void shouldEmptyFieldCardWithCredit() {
+    public void shouldEmptyFieldCardWithCredit() throws SQLException {
         var info = getEmptyCardNumber();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldCardNumberError();
+        String message = creditPaymentPage.sendingValidDataWithFieldCardNumberError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -84,7 +85,8 @@ public class TestPayCreditCard {
     public void shouldOneNumberInFieldCardNumberWithCredit() {
         var info = getOneNumberCardNumber();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldCardNumberError();
+        String message = creditPaymentPage.sendingValidDataWithFieldCardNumberError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -92,7 +94,8 @@ public class TestPayCreditCard {
     public void shouldFifteenNumberInFieldCardNumberWithCredit() {
         var info = getFifteenNumberCardNumber();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldCardNumberError();
+        String message = creditPaymentPage.sendingValidDataWithFieldCardNumberError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -100,7 +103,8 @@ public class TestPayCreditCard {
     public void shouldFakerCardInFieldCardNumberWithCredit() {
         var info = getFakerNumberCardNumber();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFakerCardNumber();
+        String message = creditPaymentPage.sendingValidDataWithFakerCardNumber();
+        assertEquals(declinedMsg, message);
     }
 
     @Test
@@ -108,7 +112,8 @@ public class TestPayCreditCard {
     public void shouldEmptyFieldMonthWithCredit() {
         var info = getEmptyMonth();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldMonthError();
+        String message = creditPaymentPage.sendingValidDataWithFieldMonthError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -116,7 +121,8 @@ public class TestPayCreditCard {
     public void shouldOneNumberInFieldMonthWithCredit() {
         var info = getOneNumberMonth();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldMonthError();
+        String message = creditPaymentPage.sendingValidDataWithFieldMonthError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -124,7 +130,8 @@ public class TestPayCreditCard {
     public void shouldFieldWithPreviousMonthWithCredit() {
         var info = getPreviousMonthInField();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldMonthError();
+        String message = creditPaymentPage.sendingValidDataWithFieldMonthError();
+        assertEquals(expiredDate, message);
     }
 
     @Test
@@ -133,7 +140,8 @@ public class TestPayCreditCard {
     public void shouldFieldWithZeroMonthWithCredit() {
         var info = getZeroMonthInField();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldMonthError();
+        String message = creditPaymentPage.sendingValidDataWithFieldMonthError();
+        assertEquals(invalidData, message);
     }
 
     @Test
@@ -142,7 +150,8 @@ public class TestPayCreditCard {
     public void shouldFieldWithThirteenMonthWithCredit() {
         var info = getThirteenMonthInField();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldMonthError();
+        String message = creditPaymentPage.sendingValidDataWithFieldMonthError();
+        assertEquals(invalidData, message);
     }
 
     @Test
@@ -150,7 +159,8 @@ public class TestPayCreditCard {
     public void shouldEmptyFieldYearWithCredit() {
         var info = getEmptyYear();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldYearError();
+        String message = creditPaymentPage.sendingValidDataWithFieldYearError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -159,7 +169,8 @@ public class TestPayCreditCard {
     public void shouldPreviousYearFieldYearWithCredit() {
         var info = getPreviousYearInField();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldYearError();
+        String message = creditPaymentPage.sendingValidDataWithFieldYearError();
+        assertEquals(expiredDate, message);
     }
 
     @Test
@@ -168,7 +179,8 @@ public class TestPayCreditCard {
     public void shouldPlusSixYearFieldYearWithCredit() {
         var info = getPlusSixYearInField();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldYearError();
+        String message = creditPaymentPage.sendingValidDataWithFieldYearError();
+        assertEquals(invalidData, message);
     }
 
     @Test
@@ -176,7 +188,8 @@ public class TestPayCreditCard {
     public void shouldEmptyFieldNameWithCredit() {
         var info = getApprovedCard();
         creditPaymentPage.sendingEmptyNameValidData(info);
-        creditPaymentPage.sendingValidDataWithFieldNameError();
+        String message = creditPaymentPage.sendingValidDataWithFieldNameError();
+        assertEquals(mustBeFilledMsg, message);
     }
 
     @Test
@@ -185,7 +198,8 @@ public class TestPayCreditCard {
     public void shouldSpecialSymbolInFieldNameWithCredit() {
         var info = getSpecialSymbolInFieldName();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldNameError();
+        String message = creditPaymentPage.sendingValidDataWithFieldNameError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -194,7 +208,8 @@ public class TestPayCreditCard {
     public void shouldNumberInFieldNameWithCredit() {
         var info = getNumberInFieldName();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldNameError();
+        String message = creditPaymentPage.sendingValidDataWithFieldNameError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -203,7 +218,8 @@ public class TestPayCreditCard {
     public void shouldRussianNameInFieldNameWithCredit() {
         var info = getRusName();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldNameError();
+        String message = creditPaymentPage.sendingValidDataWithFieldNameError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -212,7 +228,8 @@ public class TestPayCreditCard {
     public void shouldOnlySurnameInFieldNameWithCredit() {
         var info = getOnlySurnameInFieldName();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldNameError();
+        String message = creditPaymentPage.sendingValidDataWithFieldNameError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -221,7 +238,8 @@ public class TestPayCreditCard {
     public void shouldEmptyCVVInFieldCVVWithCredit() {
         var info = getEmptyCVVInFieldCVV();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldCVVError();
+        String message = creditPaymentPage.sendingValidDataWithFieldCVVError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -230,7 +248,8 @@ public class TestPayCreditCard {
     public void shouldOneNumberInFieldCVVWithCredit() {
         var info = getOneNumberInFieldCVV();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldCVVError();
+        String message = creditPaymentPage.sendingValidDataWithFieldCVVError();
+        assertEquals(wrongFormatMsg, message);
     }
 
     @Test
@@ -239,6 +258,7 @@ public class TestPayCreditCard {
     public void shouldTwoNumberInFieldCVVWithCredit() {
         var info = getOTwoNumberInFieldCVV();
         creditPaymentPage.sendingCardData(info);
-        creditPaymentPage.sendingValidDataWithFieldCVVError();
+        String message = creditPaymentPage.sendingValidDataWithFieldCVVError();
+        assertEquals(wrongFormatMsg, message);
     }
 }

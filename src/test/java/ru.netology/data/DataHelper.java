@@ -18,11 +18,11 @@ public class DataHelper {
     private DataHelper() {
     }
 
-    public static String getStatusFirstCard() {
+    public static String getStatusApprovedCard() {
         return "APPROVED";
     }
 
-    public static String getStatusSecondCard() {
+    public static String getStatusDeclinedCard() {
         return "DECLINED";
     }
 
