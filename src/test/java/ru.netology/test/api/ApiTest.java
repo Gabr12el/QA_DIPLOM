@@ -12,6 +12,7 @@ import ru.netology.data.ApiHelper;
 import ru.netology.data.CardInfo;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SQLHelper;
+import ru.netology.data.entity.CreditRequestEntity;
 import ru.netology.data.entity.OrderEntity;
 import ru.netology.data.entity.PaymentEntity;
 
@@ -21,8 +22,8 @@ import static ru.netology.data.ApiHelper.payByCard;
 public class ApiTest {
     CardInfo approvedCardInfo = DataHelper.getApprovedCard();
     CardInfo declinedCardInfo = DataHelper.getDeclinedCard();
-    String debitPath = "/payment";
-    String creditPath = "/credit";
+    String debitPath = "/api/v1/pay";
+    String creditPath = "/api/v1/credit";
 
     @BeforeAll
     public static void setUp() {
@@ -35,7 +36,7 @@ public class ApiTest {
 
     @BeforeEach
     public void prepare() {
-        //SQLHelper.databaseCleanUp();
+        SQLHelper.databaseCleanUp();
     }
 
 
@@ -56,8 +57,8 @@ public class ApiTest {
         CardInfo cardData = DataHelper.getApprovedCard();
         ApiHelper.payByCard(cardData, creditPath);
         OrderEntity order = SQLHelper.getOrderInfo();
-        PaymentEntity payment = SQLHelper.getPaymentInfo();
-        assertEquals(order.getPayment_id(), payment.getTransaction_id());
+        CreditRequestEntity payment = SQLHelper.getCreditRequestInfo();
+        assertEquals(order.getPayment_id(), payment.getBank_id());
         assertEquals("APPROVED", payment.getStatus());
     }
 
@@ -75,7 +76,7 @@ public class ApiTest {
     public void checkCreditPaymentInvalidCard() {
         CardInfo cardData = DataHelper.getDeclinedCard();
         ApiHelper.payByCard(cardData, creditPath);
-        PaymentEntity payment = SQLHelper.getPaymentInfo();
+        CreditRequestEntity payment = SQLHelper.getCreditRequestInfo();
         assertEquals("DECLINED", payment.getStatus());
     }
 }

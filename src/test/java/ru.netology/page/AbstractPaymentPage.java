@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.CardInfo;
 import java.time.Duration;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -43,23 +44,19 @@ public abstract class AbstractPaymentPage {
     }
 
     public void sendingValidDataWithFieldCardNumberError (String error) {
-        assertEquals(error, fieldCardNumberError.getText());
-        fieldCardNumberError.shouldBe(visible);
+        fieldCardNumberError.shouldHave(text(error)).shouldBe(visible);
     }
 
     public void sendingValidDataWithFakerCardNumber (String error) {
-        assertEquals(error, notificationError.getText());
-        notificationError.shouldBe(visible, Duration.ofSeconds(15));
+        notificationError.shouldHave(text(error)).shouldBe(visible);
     }
 
     public void sendingValidDataWithFieldMonthError (String error) {
-        assertEquals(error, fieldMonthError.getText());
-        fieldMonthError.shouldBe(visible);
+        fieldMonthError.shouldHave(text(error)).shouldBe(visible);
     }
 
     public void sendingValidDataWithFieldYearError (String error) {
-        assertEquals(error, fieldYearError.getText());
-        fieldYearError.shouldBe(visible);
+        fieldYearError.shouldHave(text(error)).shouldBe(visible);
     }
 
     public void sendingEmptyNameValidData (CardInfo info) {
@@ -72,13 +69,11 @@ public abstract class AbstractPaymentPage {
     }
 
     public void sendingValidDataWithFieldNameError (String error) {
-        assertEquals(error, fieldOwnerError.getText());
-        fieldOwnerError.shouldBe(visible);
+        fieldOwnerError.shouldHave(text(error)).shouldBe(visible);
     }
 
     public void sendingValidDataWithFieldCVVError (String error) {
-        assertEquals(error, fieldCvcError.getText());
-        fieldCvcError.shouldBe(visible);
+        fieldCvcError.shouldHave(text(error)).shouldBe(visible);
     }
 
     public void sendEmptyForm() {

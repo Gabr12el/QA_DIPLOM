@@ -13,7 +13,7 @@ public class ApiHelper {
     //private static CardInfo cardInfo;
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
-            .setPort(9999)
+            .setPort(8080)  //коннект к сервису, а не симулятору
             .setAccept(ContentType.JSON)
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)

@@ -27,14 +27,14 @@
 **5.** Запустить целевое приложение:
 
      для mySQL: 
-    java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar 
+    java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
 
      для postgresgl:
      java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 
-**5.** Открыть второй терминал
+**6.** Открыть второй терминал
 
-**6.** Во втором терминале запустить тесты:
+**7.** Во втором терминале запустить тесты:
 
     для mySQL:
     ./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"
@@ -42,17 +42,39 @@
     для postgresgl: 
     ./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"
 
-**7.** Создать отчёт Allure и открыть в браузере:
+**8.** Создать отчёт Allure и открыть в браузере:
 
     ./gradlew allureServe
 
-**8.** Для завершения работы allureServe выполнить команду:
+**9.** Для завершения работы allureServe выполнить команду:
 
     Ctrl+C
 
-**9.** Для остановки работы контейнеров выполнить команду:
+**10.** Для остановки работы контейнеров выполнить команду:
 
     docker-compose down
+
+## Работа с данными
+
+### Просмотр данных в таблицах
+
+- Для MySQL:
+
+```select-mysql-table.cmd```
+
+- Для PostgreSQL:
+
+```select-postgres-table.cmd```
+
+### Удаление всех данных из таблиц
+
+- Для MySQL:
+
+```clear-mysql-table.cmd```
+
+- Для PostgreSQL:
+
+```clear-postgres-table.cmd```
 
 ### Дополнительные материалы:
 [Руководство по оформлению Markdown файлов](https://gist.github.com/Jekins/2bf2d0638163f1294637#Emphasis)
